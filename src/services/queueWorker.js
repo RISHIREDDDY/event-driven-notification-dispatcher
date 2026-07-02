@@ -124,7 +124,9 @@ async function processQueue() {
  */
 function startWorker() {
   emitter.on('task', () => {
-    processQueue();
+    processQueue().catch((err) => {
+      console.error('[Worker] Unexpected error in queue processing:', err.message);
+    });
   });
   console.log('[Worker] Background queue worker started');
 }
